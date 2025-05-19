@@ -1,5 +1,5 @@
 {
-  "name": "ar-project",
+  "name": "ar-scan-fe",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,8 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@mui/icons-material": "^7.1.0",
-    "@mui/material": "^7.1.0",
     "@react-three/fiber": "^9.1.2",
     "@react-three/xr": "^6.6.17",
     "react": "^19.1.0",
