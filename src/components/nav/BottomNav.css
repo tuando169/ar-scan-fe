@@ -8,6 +8,7 @@
   justify-content: space-around;
   align-items: center;
   color: #ccc;
+  background-color: #242424;
 }
 
 .bottom-nav button {
@@ -19,6 +20,7 @@
   cursor: pointer;
   color: #ccc;
   outline: none;
+  transition: color 0.3s ease;
 }
 
 .bottom-nav button.active {
