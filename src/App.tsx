@@ -5,8 +5,8 @@ import {
   Navigate,
 } from "react-router-dom";
 import Scan from "./components/Scan";
-import Manage from "./components/Manage";
-import BottomNav from "./components/nav/BottomNav";
+import Manage from "./components/layouts/manage/Manage";
+import BottomNav from "./components/layouts/BottomNav";
 
 export default function App() {
   return (
