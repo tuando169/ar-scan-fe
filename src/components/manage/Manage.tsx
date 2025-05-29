@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import LoginPopup from '../auth/LoginPopup';
 import RegisterPopup from '../auth/RegisterPopup';
 import CreateModelPopup from './popups/CreateModelPopup';
+import ModelDetailsPopup from './popups/ModelDetailsPopup';
+import ConfirmDeletePopup from './popups/ConfirmDeletePopup';
+import UpdateModelPopup from './popups/UpdateModelPopup';
 import axios from 'axios';
 import { apiEndpoints } from '../../apiEndpoints';
 import type { Model } from '../../types';
@@ -15,10 +18,23 @@ export default function Manage() {
           userId: localStorage.getItem('userId'),
         },
       });
-      console.log(res.data.models);
       setModelList(res.data.models);
     } catch (error) {
       console.error('Error fetching data:', error);
+    }
+  }
+
+  async function handleDeleteConfirm() {
+    if (!selectedModel) return;
+
+    try {
+      await axios.delete(apiEndpoints.model.delete + selectedModel.id);
+      setIsShowConfirmDeletePopup(false);
+      setSelectedModel(null);
+      fetchData();
+    } catch (error) {
+      console.error('Error deleting model:', error);
+      alert('An error occurred while deleting the model. Please try again.');
     }
   }
 
@@ -27,6 +43,9 @@ export default function Manage() {
   const [isShowLoginPopup, setIsShowLoginPopup] = useState(false);
   const [isShowRegisterPopup, setIsShowRegisterPopup] = useState(false);
   const [isShowCreatePopup, setIsShowCreatePopup] = useState(false);
+  const [isShowDetailsPopup, setIsShowDetailsPopup] = useState(false);
+  const [isShowUpdatePopup, setIsShowUpdatePopup] = useState(false);
+  const [isShowConfirmDeletePopup, setIsShowConfirmDeletePopup] = useState(false);
   const [modelList, setModelList] = useState<Model[]>([]);
   const [selectedModel, setSelectedModel] = useState<Model | null>(null);
 
@@ -48,6 +67,29 @@ export default function Manage() {
           onCreated={() => fetchData()}
         />
       )}
+      {isShowDetailsPopup && selectedModel && (
+        <ModelDetailsPopup
+          model={selectedModel}
+          onClose={() => setIsShowDetailsPopup(false)}
+        />
+      )}
+      {isShowUpdatePopup && selectedModel && (
+        <UpdateModelPopup
+          model={selectedModel}
+          onClose={() => setIsShowUpdatePopup(false)}
+          onUpdated={() => {
+            fetchData();
+            setSelectedModel(null);
+          }}
+        />
+      )}
+      {isShowConfirmDeletePopup && selectedModel && (
+        <ConfirmDeletePopup
+          model={selectedModel}
+          onClose={() => setIsShowConfirmDeletePopup(false)}
+          onConfirm={handleDeleteConfirm}
+        />
+      )}
       {isLogged ? (
         <div className='h-full mt-16 md:mt-20'>
           <div
@@ -67,13 +109,40 @@ export default function Manage() {
               >
                 Create
               </div>
-              <div className='px-4 py-3 hover:bg-gray-700 cursor-pointer transition-colors'>
+              <div
+                className='px-4 py-3 hover:bg-gray-700 cursor-pointer transition-colors'
+                onClick={() => {
+                  if (selectedModel) {
+                    setIsShowDetailsPopup(true);
+                  } else {
+                    alert('Please select a model first');
+                  }
+                }}
+              >
                 Details
               </div>
-              <div className='px-4 py-3 hover:bg-gray-700 cursor-pointer transition-colors'>
+              <div
+                className='px-4 py-3 hover:bg-gray-700 cursor-pointer transition-colors'
+                onClick={() => {
+                  if (selectedModel) {
+                    setIsShowUpdatePopup(true);
+                  } else {
+                    alert('Please select a model first');
+                  }
+                }}
+              >
                 Change model
               </div>
-              <div className='px-4 py-3 hover:bg-gray-700 cursor-pointer transition-colors text-red-400'>
+              <div
+                className='px-4 py-3 hover:bg-gray-700 cursor-pointer transition-colors text-red-400'
+                onClick={() => {
+                  if (selectedModel) {
+                    setIsShowConfirmDeletePopup(true);
+                  } else {
+                    alert('Please select a model first');
+                  }
+                }}
+              >
                 Delete
               </div>
             </div>
