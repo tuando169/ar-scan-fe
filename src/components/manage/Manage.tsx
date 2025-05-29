@@ -10,13 +10,14 @@ import ArSpaceContainer from '../ar/ArSpaceContainer';
 export default function Manage() {
   async function fetchData() {
     try {
-      const res = await axios.get(apiEndpoints.model.getListByUser, {
-        params: {
-          userId: localStorage.getItem('userId'),
-        },
-      });
-      console.log(res.data.models);
-      setModelList(res.data.models);
+      // const res = await axios.get(apiEndpoints.model.getListByUser, {
+      //   params: {
+      //     userId: localStorage.getItem('userId'),
+      //   },
+      // });
+      // console.log(res.data.models);
+      // setModelList(res.data.models);
+      setModelList();
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -27,11 +28,45 @@ export default function Manage() {
   const [isShowLoginPopup, setIsShowLoginPopup] = useState(false);
   const [isShowRegisterPopup, setIsShowRegisterPopup] = useState(false);
   const [isShowCreatePopup, setIsShowCreatePopup] = useState(false);
-  const [modelList, setModelList] = useState([]);
+  const [modelList, setModelList] = useState<Model[]>([
+    {
+      id: 1,
+      name: 'Model A',
+      description: 'This is model A',
+      file: 'model-a.glb',
+      user: 1,
+    },
+    {
+      id: 2,
+      name: 'Model B',
+      description: 'This is model B',
+      file: 'model-b.glb',
+      user: 1,
+    },
+    {
+      id: 3,
+      name: 'Model C',
+      description: 'Test model C',
+      file: 'model-c.glb',
+      user: 1,
+    },
+    {
+      id: 4,
+      name: 'Model D',
+      description: 'Sample D description',
+      file: 'model-d.glb',
+      user: 1,
+    },
+    {
+      id: 5,
+      name: 'Model E',
+      description: 'Generated from camera',
+      file: 'model-e.glb',
+      user: 1,
+    },
+  ]);
   const [selectedModel, setSelectedModel] = useState<Model | null>(null);
-  useEffect(() => {
-    fetchData();
-  });
+
   return (
     <div className='relative min-h-screen bg-gray-100 p-4 h-full'>
       {isShowLoginPopup && (

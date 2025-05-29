@@ -4,7 +4,7 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
-import Scan from './components/Scan';
+import Scan from './components/scan/Scan';
 import Manage from './components/manage/Manage';
 import BottomNav from './components/layouts/BottomNav';
 

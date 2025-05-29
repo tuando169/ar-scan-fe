@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import ArSpaceContainer from './ar/ArSpaceContainer';
+import ArSpaceContainer from '../ar/ArSpaceContainer';
 import {
   Html5Qrcode,
   Html5QrcodeScanner,
   Html5QrcodeScanType,
 } from 'html5-qrcode';
-import { apiEndpoints } from '../apiEndpoints';
+import { apiEndpoints } from '../../apiEndpoints';
 import axios from 'axios';
 
 export default function Scan() {
