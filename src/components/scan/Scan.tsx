@@ -12,7 +12,7 @@ import type { Model } from '../../types';
 export default function Scan() {
   const [model, setModel] = useState<Model | null>(null);
   const [scannedUrl, setScannedUrl] = useState<string | null>(null);
-  const scannerRef = useRef<HTMLDivElement>(null);
+  const scannerRef = useRef<Html5QrcodeScanner | null>(null);
 
   const handleQrImageUpload = async (
     e: React.ChangeEvent<HTMLInputElement>
@@ -28,15 +28,15 @@ export default function Scan() {
       setScannedUrl(decodedText);
       scanner.clear();
     } catch (err) {
-      console.error('Không thể giải mã ảnh QR:', err);
-      alert('Không thể giải mã ảnh QR.');
+      console.error('Cannot decode QR image:', err);
+      alert('Cannot decode QR image.');
     }
   };
 
   useEffect(() => {
-    if (model || scannedUrl) return;
+    if (model || scannedUrl || scannerRef.current) return;
 
-    const scanner = new Html5QrcodeScanner(
+    scannerRef.current = new Html5QrcodeScanner(
       'qr-reader',
       {
         fps: 10,
@@ -46,11 +46,14 @@ export default function Scan() {
       false
     );
 
-    scanner.render(
+    scannerRef.current.render(
       async (decodedText: string) => {
         console.log('QR code scanned:', decodedText);
         setScannedUrl(decodedText);
-        await scanner.clear();
+        if (scannerRef.current) {
+          await scannerRef.current.clear();
+          scannerRef.current = null;
+        }
       },
       (error) => {
         console.warn('QR scan error:', error);
@@ -58,7 +61,10 @@ export default function Scan() {
     );
 
     return () => {
-      scanner.clear().catch(console.error);
+      if (scannerRef.current) {
+        scannerRef.current.clear().catch(console.error);
+        scannerRef.current = null;
+      }
     };
   }, [model, scannedUrl]);
 
@@ -76,25 +82,31 @@ export default function Scan() {
   }, [scannedUrl]);
 
   return (
-    <>
+    <div className="flex flex-col items-center justify-start min-h-screen bg-black text-white p-4">
       {!model && (
-        <div className='flex flex-col items-center text-white '>
-          <div id='qr-reader' style={{ width: '100%' }} ref={scannerRef} />
-          <div id='qr-temp' className='hidden' />
-          <div className='mt-4 fixed'>
-            <label className='bg-green-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-green-700 transition-colors'>
-              Giải mã ảnh QR
-              <input
-                type='file'
-                accept='image/*'
-                onChange={handleQrImageUpload}
-                className='hidden'
-              />
-            </label>
-          </div>
+        <div className="w-full max-w-md sm:max-w-lg mx-auto space-y-6">
+          <div
+            id="qr-reader"
+            className="w-full aspect-square sm:aspect-video rounded-xl overflow-hidden bg-gray-900"
+          />
+          <div id="qr-temp" className="hidden" />
+          <label className="inline-flex items-center justify-center w-full px-6 py-3 bg-blue-600 text-white rounded-xl cursor-pointer hover:bg-blue-700 transition-colors">
+            <span className="font-medium">Upload QR Image</span>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleQrImageUpload}
+              className="hidden"
+            />
+          </label>
         </div>
       )}
-      {model && <ArSpaceContainer file={model.file} />}
-    </>
+
+      {model && (
+        <div className="w-full h-[calc(100vh-5rem)] mt-4">
+          <ArSpaceContainer file={model.file} />
+        </div>
+      )}
+    </div>
   );
 }
