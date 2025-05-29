@@ -7,9 +7,10 @@ import {
 } from 'html5-qrcode';
 import { apiEndpoints } from '../../apiEndpoints';
 import axios from 'axios';
+import type { Model } from '../../types';
 
 export default function Scan() {
-  const [model, setModel] = useState<File | null>(null);
+  const [model, setModel] = useState<Model | null>(null);
   const [scannedUrl, setScannedUrl] = useState<string | null>(null);
   const scannerRef = useRef<HTMLDivElement>(null);
 
@@ -63,19 +64,14 @@ export default function Scan() {
 
   useEffect(() => {
     if (scannedUrl) {
-      // axios
-      //   .get(apiEndpoints.model.getById + scannedUrl, {
-      //     responseType: 'blob',
-      //   })
-      //   .then((response) => {
-      //     const blob = new Blob([response.data], { type: 'model/gltf-binary' });
-      //     const file = new File([blob], 'model.glb', { type: blob.type });
-      //     setModel(file);
-      //   })
-      //   .catch((err) => {
-      //     console.error('Error fetching model:', err);
-      //   });
-      setModel(new Blob());
+      axios
+        .get(apiEndpoints.model.getById + scannedUrl)
+        .then((res) => {
+          setModel(res.data.model);
+        })
+        .catch((err) => {
+          console.error('Error fetching model:', err);
+        });
     }
   }, [scannedUrl]);
 
@@ -98,7 +94,7 @@ export default function Scan() {
           </div>
         </div>
       )}
-      {model && <ArSpaceContainer model={model} />}
+      {model && <ArSpaceContainer file={model.file} />}
     </>
   );
 }

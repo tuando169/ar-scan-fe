@@ -40,7 +40,7 @@ export default function CreateModelPopup({
       formData.append('name', name);
       formData.append('description', description);
       formData.append('file', file);
-      formData.append('user', localStorage.getItem('user') || '');
+      formData.append('user', localStorage.getItem('userId') || '');
       await axios.post(apiEndpoints.model.create, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',

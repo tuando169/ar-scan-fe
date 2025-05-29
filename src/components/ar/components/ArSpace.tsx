@@ -10,7 +10,7 @@ interface ModelInstance {
   position: THREE.Vector3;
 }
 
-export default function ArSpace({ model }: { model: File }) {
+export default function ArSpace({ file }: { file: string }) {
   const reticleRef = useRef<THREE.Mesh>(null);
   const [models, setModels] = useState<ModelInstance[]>([]);
 
@@ -53,7 +53,7 @@ export default function ArSpace({ model }: { model: File }) {
       {isPresenting &&
         models.map(({ position, id }) => (
           <Fragment key={id}>
-            <Model position={position} model={model} />
+            <Model position={position} file={file} />
           </Fragment>
         ))}
 
@@ -64,7 +64,7 @@ export default function ArSpace({ model }: { model: File }) {
         </mesh>
       )}
 
-      {!isPresenting && <Model model={model} position={[0, -0.5, 0]} />}
+      {!isPresenting && <Model file={file} position={[0, -0.5, 0]} />}
     </>
   );
 }
