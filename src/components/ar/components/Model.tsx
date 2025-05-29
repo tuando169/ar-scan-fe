@@ -7,16 +7,17 @@ import { apiEndpoints } from '../../../apiEndpoints';
 interface ModelProps {
   position?: Vector3;
   file: string;
+  scale?: number;
 }
 
-export default function Model({ position = [0, -0.5, 0], file }: ModelProps) {
+export default function Model({ position = [0, -0.5, 0], file, scale = 1.5 }: ModelProps) {
   const modelRef = useRef<THREE.Object3D>(null);
   console.log('Loading model from:', file);
 
   const gltf = useLoader(GLTFLoader, apiEndpoints.upload.getResource(file));
 
   return (
-    <group position={position}>
+    <group position={position} scale={[scale, scale, scale]}>
       <primitive object={gltf.scene} ref={modelRef} />
     </group>
   );
