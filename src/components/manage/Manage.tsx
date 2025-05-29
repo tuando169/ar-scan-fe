@@ -45,7 +45,8 @@ export default function Manage() {
   const [isShowCreatePopup, setIsShowCreatePopup] = useState(false);
   const [isShowDetailsPopup, setIsShowDetailsPopup] = useState(false);
   const [isShowUpdatePopup, setIsShowUpdatePopup] = useState(false);
-  const [isShowConfirmDeletePopup, setIsShowConfirmDeletePopup] = useState(false);
+  const [isShowConfirmDeletePopup, setIsShowConfirmDeletePopup] =
+    useState(false);
   const [modelList, setModelList] = useState<Model[]>([]);
   const [selectedModel, setSelectedModel] = useState<Model | null>(null);
 
@@ -131,7 +132,7 @@ export default function Manage() {
                   }
                 }}
               >
-                Change model
+                Edit
               </div>
               <div
                 className='px-4 py-3 hover:bg-gray-700 cursor-pointer transition-colors text-red-400'
@@ -147,7 +148,7 @@ export default function Manage() {
               </div>
             </div>
           )}
-          <div className='h-[50vh] md:h-[60%] rounded-xl overflow-hidden bg-gray-800'>
+          <div className='rounded-xl bg-gray-800'>
             {selectedModel && <ArSpaceContainer file={selectedModel.file} />}
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6'>

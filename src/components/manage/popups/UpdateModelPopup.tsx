@@ -44,9 +44,8 @@ export default function UpdateModelPopup({
       if (file) {
         formData.append('file', file);
       }
-      formData.append('user', localStorage.getItem('userId') || '');
 
-      await axios.put(apiEndpoints.model.update + model.id, formData, {
+      await axios.patch(apiEndpoints.model.update + model.id, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
