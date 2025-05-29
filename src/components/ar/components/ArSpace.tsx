@@ -53,7 +53,7 @@ export default function ArSpace({ file }: { file: string }) {
       {isPresenting &&
         models.map(({ position, id }) => (
           <Fragment key={id}>
-            <Model position={position} file={file} />
+            <Model position={position} file={file} scale={1.5} />
           </Fragment>
         ))}
 
@@ -64,7 +64,7 @@ export default function ArSpace({ file }: { file: string }) {
         </mesh>
       )}
 
-      {!isPresenting && <Model file={file} position={[0, -0.5, 0]} />}
+      {!isPresenting && <Model file={file} position={[0, -0.5, 0]} scale={1.5} />}
     </>
   );
 }
