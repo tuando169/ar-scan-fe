@@ -10,16 +10,19 @@ import ArSpaceContainer from '../ar/ArSpaceContainer';
 export default function Manage() {
   async function fetchData() {
     try {
-      const res = await axios.get(
-        apiEndpoints.model.getListByUser + localStorage.getItem('user')
-      );
+      const res = await axios.get(apiEndpoints.model.getListByUser, {
+        params: {
+          userId: localStorage.getItem('userId'),
+        },
+      });
+      console.log(res.data.models);
       setModelList(res.data.models);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   }
 
-  const [isLogged] = useState(localStorage.getItem('user'));
+  const [isLogged] = useState(localStorage.getItem('userId'));
   const [isShownAction, setIsShownAction] = useState(false);
   const [isShowLoginPopup, setIsShowLoginPopup] = useState(false);
   const [isShowRegisterPopup, setIsShowRegisterPopup] = useState(false);
@@ -30,7 +33,7 @@ export default function Manage() {
     fetchData();
   });
   return (
-    <div className='relative min-h-screen bg-gray-100 p-4'>
+    <div className='relative min-h-screen bg-gray-100 p-4 h-full'>
       {isShowLoginPopup && (
         <LoginPopup onClose={() => setIsShowLoginPopup(false)} />
       )}
@@ -44,7 +47,7 @@ export default function Manage() {
         />
       )}
       {isLogged ? (
-        <div className=' mt-20'>
+        <div className='h-full mt-20'>
           <div
             className='absolute top-4 right-4 text-3xl text-gray-700 cursor-pointer'
             onClick={() => setIsShownAction(!isShownAction)}
@@ -73,11 +76,10 @@ export default function Manage() {
               </div>
             </div>
           )}
-          <div>
+          <div className='h-[60%]'>
             {selectedModel && <ArSpaceContainer model={selectedModel.file} />}
           </div>
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6'>
-            modelList
+          <div className='flex  gap-4 mt-6 overflow-x-auto'>
             {modelList.map((model: Model) => (
               <div
                 key={model.id}

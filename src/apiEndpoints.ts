@@ -5,7 +5,7 @@ export const apiEndpoints = {
     register: `${baseUrl}/auth/register`,
   },
   model: {
-    getListByUser: `${baseUrl}/model/`,
+    getListByUser: `${baseUrl}/model`,
     getById: `${baseUrl}/model/`,
     create: `${baseUrl}/model`,
     update: `${baseUrl}/model/`,

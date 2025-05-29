@@ -8,21 +8,21 @@ interface ModelProps {
 }
 
 const Model = ({ position = [0, -0.5, 0], model }: ModelProps) => {
-  const [url, setUrl] = useState<string | null>(null);
+  // const [url, setUrl] = useState<string | null>(null);
 
-  useEffect(() => {
-    const objectUrl = URL.createObjectURL(model);
-    setUrl(objectUrl);
+  // useEffect(() => {
+  //   const objectUrl = URL.createObjectURL(model);
+  //   setUrl(objectUrl);
 
-    return () => {
-      URL.revokeObjectURL(objectUrl);
-    };
-  }, [model]);
+  //   return () => {
+  //     URL.revokeObjectURL(objectUrl);
+  //   };
+  // }, [model]);
 
   // const gltf = useLoader(GLTFLoader, url ?? '');
   const gltf = useLoader(GLTFLoader, '/assets/druid.gltf');
 
-  if (!url) return null;
+  // if (!url) return null;
 
   return <primitive position={position} object={gltf.scene} />;
 };
