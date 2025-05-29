@@ -1,9 +1,9 @@
-import { OrbitControls } from "@react-three/drei";
-import { useThree } from "@react-three/fiber";
-import { useHitTest, useXR, useXREvent } from "@react-three/xr";
-import { Fragment, useRef, useState } from "react";
-import * as THREE from "three";
-import Model from "./Model";
+import { OrbitControls } from '@react-three/drei';
+import { useThree } from '@react-three/fiber';
+import { useHitTest, useXR, useXREvent } from '@react-three/xr';
+import { Fragment, useRef, useState } from 'react';
+import * as THREE from 'three';
+import Model from './Model';
 
 interface ModelInstance {
   id: number;
@@ -16,7 +16,7 @@ export default function ArSpace({ model }: { model: File }) {
 
   const { isPresenting } = useXR();
 
-  useXREvent("select", () => {
+  useXREvent('select', () => {
     if (isPresenting) {
       placeModel();
     }
@@ -60,7 +60,7 @@ export default function ArSpace({ model }: { model: File }) {
       {isPresenting && (
         <mesh ref={reticleRef} rotation-x={-Math.PI / 2}>
           <ringGeometry args={[0.1, 0.25, 32]} />
-          <meshStandardMaterial color={"white"} />
+          <meshStandardMaterial color={'white'} />
         </mesh>
       )}
 

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useLoader, type Vector3 } from "@react-three/fiber";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { useEffect, useState } from 'react';
+import { useLoader, type Vector3 } from '@react-three/fiber';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 interface ModelProps {
   position?: Vector3;
@@ -19,7 +19,8 @@ const Model = ({ position = [0, -0.5, 0], model }: ModelProps) => {
     };
   }, [model]);
 
-  const gltf = useLoader(GLTFLoader, url ?? "");
+  // const gltf = useLoader(GLTFLoader, url ?? '');
+  const gltf = useLoader(GLTFLoader, '/assets/druid.gltf');
 
   if (!url) return null;
 

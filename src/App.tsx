@@ -3,31 +3,23 @@ import {
   Routes,
   Route,
   Navigate,
-} from "react-router-dom";
-import Scan from "./components/Scan";
-import Manage from "./components/layouts/manage/Manage";
-import BottomNav from "./components/layouts/BottomNav";
+} from 'react-router-dom';
+import Scan from './components/Scan';
+import Manage from './components/manage/Manage';
+import BottomNav from './components/layouts/BottomNav';
 
 export default function App() {
   return (
     <Router>
-      <div
-        style={{
-          height: "100vh",
-          width: "100vw",
-          display: "flex",
-          flexDirection: "column",
-          backgroundColor: "black",
-          overflow: "hidden",
-        }}
-      >
-        <div style={{ flex: 1, overflow: "hidden", paddingBottom: "56px" }}>
+      <div className='h-screen w-screen flex flex-col bg-black overflow-hidden'>
+        <div className='flex-1 overflow-hidden pb-14'>
           <Routes>
-            <Route path="/" element={<Navigate to="/scan" replace />} />
-            <Route path="/scan" element={<Scan />} />
-            <Route path="/manage" element={<Manage />} />
+            <Route path='/' element={<Navigate to='/scan' replace />} />
+            <Route path='/scan' element={<Scan />} />
+            <Route path='/manage' element={<Manage />} />
           </Routes>
         </div>
+
         <BottomNav />
       </div>
     </Router>
