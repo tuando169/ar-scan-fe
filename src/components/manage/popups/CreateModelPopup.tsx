@@ -40,7 +40,7 @@ export default function CreateModelPopup({
       formData.append('description', description);
       formData.append('file', file);
       formData.append('user', localStorage.getItem('userId') || '');
-      
+
       await axios.post(apiEndpoints.model.create, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -55,7 +55,7 @@ export default function CreateModelPopup({
   }
 
   return (
-    <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4 z-50'>
+    <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4  z-[100000]'>
       <div className='w-full max-w-md bg-white rounded-xl shadow-xl text-black relative'>
         <div className='p-6'>
           <button

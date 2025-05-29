@@ -9,11 +9,12 @@ interface LoginPopupProps {
 export default function LoginPopup({ onClose }: LoginPopupProps) {
   async function login() {
     try {
-      await axios.post(apiEndpoints.auth.login, {
-        name,
+      const res = await axios.post(apiEndpoints.auth.login, {
+        username: name,
         password,
       });
-      localStorage.setItem('user', name);
+      localStorage.setItem('userId', res.data.id);
+      window.location.href = '/manage';
       handleCancel();
     } catch (error) {
       console.error('Login failed:', error);
@@ -31,7 +32,7 @@ export default function LoginPopup({ onClose }: LoginPopupProps) {
   const [password, setPassword] = useState('');
 
   return (
-    <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4 z-50'>
+    <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4  z-[100000]'>
       <div className='w-full max-w-md bg-white rounded-xl shadow-xl text-black relative'>
         <div className='p-6'>
           <button

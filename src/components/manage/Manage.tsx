@@ -10,6 +10,11 @@ import { apiEndpoints } from '../../apiEndpoints';
 import type { Model } from '../../types';
 import ArSpaceContainer from '../ar/ArSpaceContainer';
 
+function logout() {
+  localStorage.removeItem('userId');
+  window.location.href = '/scan';
+}
+
 export default function Manage() {
   async function fetchData() {
     try {
@@ -99,6 +104,12 @@ export default function Manage() {
           >
             <span className='text-2xl'>⋮</span>
           </div>
+          <div
+            className='absolute top-4 left-4 flex items-center justify-center rounded-md py-2 px-4 bg-gray-800 hover:bg-gray-700 cursor-pointer transition-colors'
+            onClick={logout}
+          >
+            <span className='text-lg'>Logout</span>
+          </div>
           {isShownAction && (
             <div
               className='absolute top-16 right-6 bg-gray-800 text-white rounded-xl shadow-xl z-10 w-48 overflow-hidden'
@@ -132,7 +143,7 @@ export default function Manage() {
                   }
                 }}
               >
-                Change model
+                Edit
               </div>
               <div
                 className='px-4 py-3 hover:bg-gray-700 cursor-pointer transition-colors text-red-400'
