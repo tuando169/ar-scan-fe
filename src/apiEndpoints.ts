@@ -1,5 +1,3 @@
-console.log(process.env.NODE_ENV);
-
 const baseUrl =
   process.env.NODE_ENV === 'production'
     ? 'https://ar-scan-be.vercel.app'
@@ -17,8 +15,5 @@ export const apiEndpoints = {
     create: `${baseUrl}/model`,
     update: `${baseUrl}/model/`,
     delete: `${baseUrl}/model/`,
-  },
-  upload: {
-    getResource: (path: string) => `${baseUrl}/${path}`,
   },
 };

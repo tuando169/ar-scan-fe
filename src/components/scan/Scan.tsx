@@ -24,7 +24,6 @@ export default function Scan() {
 
     try {
       const decodedText = await scanner.scanFile(imageFile, true);
-      console.log('QR from image:', decodedText);
       setScannedUrl(decodedText);
       scanner.clear();
     } catch (err) {
@@ -48,7 +47,6 @@ export default function Scan() {
 
     scannerRef.current.render(
       async (decodedText: string) => {
-        console.log('QR code scanned:', decodedText);
         setScannedUrl(decodedText);
         if (scannerRef.current) {
           await scannerRef.current.clear();
