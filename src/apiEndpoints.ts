@@ -1,4 +1,10 @@
-const baseUrl = 'http://localhost:8000';
+console.log(process.env.NODE_ENV);
+
+const baseUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://ar-scan-be.vercel.app'
+    : 'http://localhost:8000';
+
 export const apiEndpoints = {
   auth: {
     login: `${baseUrl}/auth/login`,
