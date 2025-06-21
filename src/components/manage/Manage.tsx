@@ -17,6 +17,9 @@ function logout() {
 
 export default function Manage() {
   async function fetchData() {
+    if (!localStorage.getItem('userId')) {
+      return;
+    }
     try {
       const res = await axios.get(apiEndpoints.model.getListByUser, {
         params: {
