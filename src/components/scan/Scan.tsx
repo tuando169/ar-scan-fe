@@ -78,8 +78,9 @@ export default function Scan() {
           setModel(res.data.model);
         })
         .catch((err) => {
-          alert('Model not found or invalid QR code.');
           console.error('Error fetching model:', err);
+          alert('Model not found or invalid QR code.');
+          setScannedUrl(null);
         });
     }
   }, [scannedUrl]);
